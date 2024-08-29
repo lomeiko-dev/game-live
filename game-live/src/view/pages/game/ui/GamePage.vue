@@ -2,5 +2,8 @@
 </script>
 
 <template>
-  <RouterView/>
+    Game
 </template>
+
+<style lang="scss" scoped>
+</style>
