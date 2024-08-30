@@ -12,6 +12,11 @@ import { Modal } from "view/ui/modal";
 import Description from "./components/description/Description.vue";
 
 const showInfo = ref(false);
+
+const clickGitHandler = () => {
+  window.location.replace('https://github.com/lomeiko-dev/game-live/tree/dev')
+}
+
 </script>
 <template>
   <Page>
@@ -24,7 +29,7 @@ const showInfo = ref(false);
       <Button @click="() => null" :type="enumTypeButton.CIRCLE" class="button">
         <inlineSvg class="icon" :src="play" />
       </Button>
-      <Button @click="() => null" :type="enumTypeButton.CIRCLE" class="button">
+      <Button @click="clickGitHandler" :type="enumTypeButton.CIRCLE" class="button">
         <inlineSvg class="icon" :src="git" />
       </Button>
     </section>

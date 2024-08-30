@@ -10,5 +10,6 @@
   height: 100vh;
   color: var(--text-primary);
   position: relative;
+  transition: .2s;
 }
 </style>
