@@ -1,0 +1,1 @@
+export type typeTheme = "light" | "dark" | "green"

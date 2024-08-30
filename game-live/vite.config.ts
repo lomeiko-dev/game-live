@@ -9,6 +9,7 @@ export default defineConfig({
       model: "/src/model",
       view: "/src/view",
       viewModel: "/src/viewModel",
+      assets: "/src/assets",
     },
   },
 });

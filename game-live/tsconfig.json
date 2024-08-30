@@ -18,7 +18,8 @@
     "paths": {
       "view/*": ["view/*"],
       "viewModel/*": ["viewModel/*"],
-      "model/*": ["model/*"]
+      "model/*": ["model/*"],
+      "assets/*": ["assets/*"]
     },
 
     /* Linting */
