@@ -72,7 +72,7 @@ const closedModalHanlder = () => {
     margin: 10px;
     width: 100%;
     max-height: 700px;
-    background-color: rgba(#9b9b9b, 0.5);
+    background-color: rgba(#6b6b6b, 0.5);
     backdrop-filter: blur(5px);
     padding: 20px 30px;
     transform: scale(0.1);

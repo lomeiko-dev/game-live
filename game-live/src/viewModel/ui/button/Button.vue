@@ -35,5 +35,6 @@ const emits = defineEmits(['click'])
 
     .rectangle{
         border-radius: 3px;
+        padding: 10px 20px;
     }
 </style>

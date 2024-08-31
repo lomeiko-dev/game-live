@@ -6,7 +6,7 @@ const theme = themeStore()
 </script>
 
 <template>
-  <div :class="theme.theme">
+  <div :class="theme.theme.themeName">
     <RouterView/>
   </div>
 </template>
