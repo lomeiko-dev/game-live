@@ -1,12 +1,22 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { FieldManager } from "viewModel/field-manager";
 import { Page } from "view/ui/page";
 import { fieldStore } from "model/field";
+import { useRouter } from "vue-router";
+import { Routes } from "view/app/routing";
 
 const bodyRef = ref<HTMLDivElement>();
 
+const router = useRouter()
 const store = fieldStore();
+
+watchEffect(() => {
+    if(store.field.length === 0){
+        router.push({path: Routes.HOME.path})
+    }
+})
+
 </script>
 
 <template>

@@ -5,7 +5,7 @@ import sun from "assets/svg/sun.svg";
 import { themeStore, themeList } from "model/theme";
 
 const theme = themeStore();
-const indexSelected = ref(-1);
+const indexSelected = ref(0);
 
 const changeTheme = () => {
     if(indexSelected.value === 2){
