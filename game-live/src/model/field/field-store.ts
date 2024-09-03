@@ -13,6 +13,7 @@ export const fieldStore = defineStore("field", () => {
 
   const toggleCell = (x: number, y: number) => {
     field.value[y][x] = field.value[y][x] === 0 ? 1 : 0;
+    return field.value[y][x];
   };
 
   return {

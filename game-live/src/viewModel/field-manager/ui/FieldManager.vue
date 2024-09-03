@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref, watch, watchEffect } from "vue";
+import { ref, onMounted } from "vue";
 import { drawCell, fieldStore } from "model/field";
 import { themeStore } from "model/theme";
+import { fillCell } from "model/field/field-helper";
+import { clearCell } from "model/field/field-helper";
 interface IProps {
   size_x: number;
   size_y: number;
@@ -14,7 +16,7 @@ const canvasRef = ref<HTMLCanvasElement>();
 const store = fieldStore();
 const theme = themeStore();
 
-const updateCells = () => {
+onMounted(() => {
   if (canvasRef.value)
     drawCell(
       canvasRef.value,
@@ -23,19 +25,7 @@ const updateCells = () => {
       theme.theme.colors.bgTeriary,
       theme.theme.colors.textPrimary
     );
-};
-
-watchEffect(() => {
-  updateCells()
-})
-
-watch(
-  () => store.field,
-  () => {
-    updateCells()
-  },
-  { deep: true }
-);
+});
 
 const canvasClickHanler = (e: any) => {
   if (canvasRef.value) {
@@ -47,7 +37,11 @@ const canvasClickHanler = (e: any) => {
     const row = Math.floor(y / 25);
 
     if (col >= 0 && col < props.size_x && row >= 0 && row < props.size_y) {
-      store.toggleCell(col, row);
+      const result = store.toggleCell(col, row);
+      if (result === 1) fillCell(canvasRef.value, row, col, 25, theme.theme.colors.bgTeriary);
+      else {
+        clearCell(canvasRef.value, row, col, 25)
+      }
     }
   }
 };
@@ -61,5 +55,4 @@ const canvasClickHanler = (e: any) => {
     :height="props.size_y * 25"
   ></canvas>
 </template>
-<style lang="scss">
-</style>
+<style lang="scss"></style>
