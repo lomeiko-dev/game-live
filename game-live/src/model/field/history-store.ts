@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { ICoord, typeCell } from "./types";
 import { getNeighbors } from "./field-helper";
 
-export const fieldStore = defineStore("field", () => {
+export const historyStore = defineStore("history", () => {
   const field = ref<typeCell[][]>([]);
   const cell_size = ref<number>(0);
 

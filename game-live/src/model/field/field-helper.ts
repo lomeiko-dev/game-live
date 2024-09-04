@@ -25,21 +25,57 @@ export const drawCell = (
   }
 };
 
-export const fillCell = (canvas: HTMLCanvasElement, row: number, col: number, size: number, color: string) => {
-  const ctx = canvas.getContext("2d");
+export const fillCell = (
+  canvas: HTMLCanvasElement | undefined,
+  row: number,
+  col: number,
+  size: number,
+  color: string
+) => {
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
 
-  if (ctx) {
-    ctx.fillStyle = color;
-    ctx.fillRect(col * size, row * size, size, size);
-    ctx.strokeRect(col * size, row * size, size, size);
+    if (ctx) {
+      ctx.fillStyle = color;
+      ctx.fillRect(col * size, row * size, size, size);
+      ctx.strokeRect(col * size, row * size, size, size);
+    }
   }
 };
 
-export const clearCell = (canvas: HTMLCanvasElement, row: number, col: number, size: number) => {
-  const ctx = canvas.getContext("2d");
+export const clearCell = (canvas: HTMLCanvasElement | undefined, row: number, col: number, size: number) => {
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
 
-  if (ctx) {  
-    ctx.clearRect(col * size, row * size, size, size);
-    ctx.strokeRect(col * size, row * size, size, size);
+    if (ctx) {
+      ctx.clearRect(col * size, row * size, size, size);
+      ctx.strokeRect(col * size, row * size, size, size);
+    }
   }
+};
+
+export const getNeighbors = (matrix: typeCell[][], col: number, row: number) => {
+  const neighbors = [];
+  const numRows = matrix.length;
+  const numCols = matrix[0].length;
+
+  const directions = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+  ];
+
+  for (const [dRow, dCol] of directions) {
+    const neighborRow = (row + dRow + numRows) % numRows;
+    const neighborCol = (col + dCol + numCols) % numCols;
+
+    neighbors.push(matrix[neighborRow][neighborCol]);
+  }
+
+  return neighbors;
 };

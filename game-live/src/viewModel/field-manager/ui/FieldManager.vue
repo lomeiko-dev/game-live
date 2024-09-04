@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { drawCell, fieldStore } from "model/field";
 import { themeStore } from "model/theme";
 import { fillCell } from "model/field/field-helper";
 import { clearCell } from "model/field/field-helper";
+
 interface IProps {
   size_x: number;
   size_y: number;
   parent: HTMLDivElement;
+  isPause: boolean;
+  speed: number;
 }
 
 const props = defineProps<IProps>();
@@ -15,6 +18,8 @@ const props = defineProps<IProps>();
 const canvasRef = ref<HTMLCanvasElement>();
 const store = fieldStore();
 const theme = themeStore();
+
+let intervalId: number | null = null;
 
 onMounted(() => {
   if (canvasRef.value)
@@ -26,6 +31,47 @@ onMounted(() => {
       theme.theme.colors.textPrimary
     );
 });
+
+watch(
+  () => props.isPause,
+  () => {
+    props.isPause ? stopAsyncAction() : startAsyncAction();
+  }
+);
+
+watch(
+  () => props.speed,
+  () => {
+    updateAsyncAction();
+  }
+);
+
+const updateAsyncAction = () => {
+  stopAsyncAction();
+  startAsyncAction();
+};
+
+const startAsyncAction = () => {
+  if (intervalId === null) {
+    intervalId = window.setInterval(() => {
+      for (let row = 0; row < store.field.length; row++) {
+        for (let col = 0; col < store.field[row].length; col++) {
+          store.motion(row, col);
+        }
+      }
+
+      store.clearedCellsByArray((x, y) => clearCell(canvasRef.value, x, y, 25));
+      store.fiiledCellByArray((x, y) => fillCell(canvasRef.value, x, y, 25, theme.theme.colors.bgTeriary));
+    }, props.speed);
+  }
+};
+
+const stopAsyncAction = () => {
+  if (intervalId !== null) {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+};
 
 const canvasClickHanler = (e: any) => {
   if (canvasRef.value) {
@@ -40,7 +86,7 @@ const canvasClickHanler = (e: any) => {
       const result = store.toggleCell(col, row);
       if (result === 1) fillCell(canvasRef.value, row, col, 25, theme.theme.colors.bgTeriary);
       else {
-        clearCell(canvasRef.value, row, col, 25)
+        clearCell(canvasRef.value, row, col, 25);
       }
     }
   }
