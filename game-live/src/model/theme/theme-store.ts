@@ -6,7 +6,8 @@ import { themeList } from "./theme-list";
 const THEME_KEY = "theme_app";
 
 export const themeStore = defineStore("theme", () => {
-  const theme = ref<Itheme>(themeList[0]);
+  const indexSelected = ref(0);
+  const theme = ref<Itheme>(themeList[indexSelected.value]);
 
   const loadTheme = () => {
     const storedTheme = localStorage.getItem(THEME_KEY);
@@ -14,6 +15,7 @@ export const themeStore = defineStore("theme", () => {
       const themeName = storedTheme as typeTheme;
 
       theme.value = themeList.find((item) => item.themeName === themeName) || themeList[0];
+      indexSelected.value = theme.value.index;
     }
   };
 
@@ -30,5 +32,6 @@ export const themeStore = defineStore("theme", () => {
     loadTheme,
     changeTheme,
     saveTheme,
+    indexSelected,
   };
 });

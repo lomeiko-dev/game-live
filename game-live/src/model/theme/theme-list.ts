@@ -2,6 +2,7 @@ import { Itheme } from "./types";
 
 export const themeList: Itheme[] = [
   {
+    index: 0,
     themeName: "light",
     colors: {
       bgPrimary: "#fff",
@@ -12,6 +13,7 @@ export const themeList: Itheme[] = [
     },
   },
   {
+    index: 1,
     themeName: "dark",
     colors: {
       bgPrimary: "#333",
@@ -22,6 +24,7 @@ export const themeList: Itheme[] = [
     },
   },
   {
+    index: 2,
     themeName: "green",
     colors: {
       bgPrimary: "#1c5a00",

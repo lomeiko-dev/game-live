@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import {ref } from 'vue'
 import vueInlineSvg from "vue-inline-svg";
 import sun from "assets/svg/sun.svg";
 import { themeStore, themeList } from "model/theme";
 
 const theme = themeStore();
-const indexSelected = ref(0);
 
 const changeTheme = () => {
-    if(indexSelected.value === 2){
-        indexSelected.value = -1;
+    if(theme.indexSelected === 2){
+        theme.indexSelected = -1;
     }
 
-    indexSelected.value++;
+    theme.indexSelected++;
 
-    const newTheme = themeList[indexSelected.value]
+    const newTheme = themeList[theme.indexSelected]
     theme.changeTheme(newTheme)
     theme.saveTheme()
 };

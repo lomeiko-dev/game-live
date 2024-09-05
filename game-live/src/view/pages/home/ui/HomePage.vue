@@ -33,7 +33,7 @@ const clickGitHandler = () => {
     </Modal>
   </Page>
 </template>
-<style scoped lang="scss">
+<style lang="scss">
 .button_theme {
   position: absolute;
   top: 20px;
@@ -41,9 +41,11 @@ const clickGitHandler = () => {
 }
 
 .modal-info {
+  width: 100%;
   max-width: 800px;
 }
 .modal-form {
+  width: 100%;
   max-width: 300px;
 }
 </style>
