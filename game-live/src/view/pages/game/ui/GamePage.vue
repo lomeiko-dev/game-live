@@ -100,4 +100,13 @@ const clearField = () => {
     padding: 20px;
   }
 }
+
+@media (max-width: 1024px) {
+  .page{
+    flex-direction: column;
+  }
+  .body_field, .controller{
+    width: 100%;
+  }
+}
 </style>

@@ -148,4 +148,29 @@ watch(
     padding: 0 10px;
   }
 }
+
+@media (max-width: 1024px) {
+  .form{
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .form_body{
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .buttons{
+      position: static;
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .form{
+    flex-direction: column;
+  }
+}
 </style>

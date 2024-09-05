@@ -10,7 +10,7 @@
 </template>
 <style scoped lang="scss">
 .header {
-  padding-top: 30px;
+  padding: 30px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,6 +18,7 @@
   h1 {
     font-size: 48px;
     font-weight: 700;
+    text-align: center;
   }
   h2 {
     margin-top: 50px;
@@ -26,6 +27,41 @@
     font-size: 24px;
     font-weight: 500;
     line-height: 42px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header{
+    h1{
+      font-size: 32px;
+    }
+    h2{
+      margin-top: 25px;
+      font-size: 18px;
+      line-height: 24px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header{
+    h1{
+      margin-top: 50px;
+      font-size: 28px;
+    }
+    h2{
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .header{
+    h1{
+      font-size: 24px;
+    }
   }
 }
 </style>
