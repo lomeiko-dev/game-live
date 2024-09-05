@@ -15,6 +15,10 @@ export const fieldStore = defineStore("field", () => {
     cell_size.value = size_cell;
   };
 
+  const setField = (value: typeCell[][]) => {
+    field.value = value;
+  };
+
   const toggleCell = (x: number, y: number) => {
     field.value[y][x] = field.value[y][x] === 0 ? 1 : 0;
     return field.value[y][x];
@@ -59,5 +63,6 @@ export const fieldStore = defineStore("field", () => {
     motion,
     fiiledCellByArray,
     clearedCellsByArray,
+    setField,
   };
 });

@@ -7,14 +7,17 @@ import pause from "assets/svg/pause.svg";
 import inlineSvg from "vue-inline-svg";
 import { Button, enumTypeButton } from "viewModel/ui/button";
 import { speedsConfig } from "../model/config/speed-config";
+import { useRouter } from "vue-router";
+import { Routes } from "view/app/routing";
 
-const emits = defineEmits(["setSpeed", "setPause", "onIncrement", "onDecrement"]);
+const emits = defineEmits(["setSpeed", "setPause", "onMotion", "clear"]);
 
 const isPause = ref(true);
 const speedIndex = ref(2);
+const router = useRouter();
 
-const toggleArrow = (emit: "onIncrement" | "onDecrement") => {
-  emits(emit);
+const onMotion = () => {
+  emits("onMotion");
   isPause.value = true;
 };
 
@@ -36,6 +39,15 @@ const decrementSpeed = () => {
   speedIndex.value--;
 };
 
+const clickMenuHandler = () => {
+  router.push({ path: Routes.HOME.path });
+};
+
+const clearField = () => {
+  emits("clear");
+  isPause.value = true;
+};
+
 watch(
   () => isPause.value,
   () => {
@@ -53,9 +65,6 @@ watch(
 <template>
   <div class="form">
     <div class="form_body">
-      <Button @click="toggleArrow" class="btn_arrow" :type="enumTypeButton.CIRCLE">
-        <inlineSvg :src="arrow" />
-      </Button>
       <Button @click="decrementSpeed" class="btn_rewind" :type="enumTypeButton.CIRCLE">
         <inlineSvg :src="rewind" />
       </Button>
@@ -68,7 +77,7 @@ watch(
       <Button @click="incrementSpeed" class="btn_rewind" :type="enumTypeButton.CIRCLE">
         <inlineSvg :src="rewind" />
       </Button>
-      <Button @click="toggleArrow" class="btn_arrow" :type="enumTypeButton.CIRCLE">
+      <Button @click="onMotion" class="btn_arrow" :type="enumTypeButton.CIRCLE">
         <inlineSvg :src="arrow" />
       </Button>
     </div>
@@ -78,8 +87,8 @@ watch(
       </div>
     </div>
     <div class="buttons">
-      <Button class="btn" :type="enumTypeButton.RECTANGLE"> Очистить всё поле </Button>
-      <Button :type="enumTypeButton.RECTANGLE"> Меню </Button>
+      <Button @click="clearField" :type="enumTypeButton.RECTANGLE"> Очистить всё поле </Button>
+      <Button @click="clickMenuHandler" :type="enumTypeButton.RECTANGLE"> Меню </Button>
     </div>
   </div>
 </template>
@@ -94,7 +103,7 @@ watch(
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 
     .btn_play {
       width: 50px;
@@ -104,10 +113,7 @@ watch(
       width: 20px;
       height: 20px;
     }
-    button:nth-child(5) {
-      transform: scale(-1, 1);
-    }
-    button:nth-child(4) {
+    button:nth-child(3) {
       transform: scale(-1, 1);
     }
     .btn_rewind {
@@ -118,8 +124,6 @@ watch(
 
   .speed_box {
     margin-top: 20px;
-    display: flex;
-    justify-content: center;
 
     .speed {
       background-color: var(--bg-secondary);

@@ -54,6 +54,13 @@ export const clearCell = (canvas: HTMLCanvasElement | undefined, row: number, co
   }
 };
 
+export const clearAllField = (canvas: HTMLCanvasElement | undefined) => {
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+};
+
 export const getNeighbors = (matrix: typeCell[][], col: number, row: number) => {
   const neighbors = [];
   const numRows = matrix.length;

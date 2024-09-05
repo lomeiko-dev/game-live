@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import { drawCell, fieldStore } from "model/field";
+import { fieldStore, fillCell, clearCell } from "model/field";
 import { themeStore } from "model/theme";
-import { fillCell } from "model/field/field-helper";
-import { clearCell } from "model/field/field-helper";
 
 interface IProps {
   size_x: number;
@@ -14,6 +12,7 @@ interface IProps {
 }
 
 const props = defineProps<IProps>();
+const emits = defineEmits(['motion', 'getCanvas'])
 
 const canvasRef = ref<HTMLCanvasElement>();
 const store = fieldStore();
@@ -22,15 +21,22 @@ const theme = themeStore();
 let intervalId: number | null = null;
 
 onMounted(() => {
-  if (canvasRef.value)
-    drawCell(
-      canvasRef.value,
-      store.field,
-      store.cell_size,
-      theme.theme.colors.bgTeriary,
-      theme.theme.colors.textPrimary
-    );
+  if (canvasRef.value){
+    emits('getCanvas', canvasRef.value)
+    emits('motion', motion)
+  }
 });
+
+const motion = () => {
+  for (let row = 0; row < store.field.length; row++) {
+    for (let col = 0; col < store.field[row].length; col++) {
+      store.motion(row, col);
+    }
+  }
+
+  store.clearedCellsByArray((x, y) => clearCell(canvasRef.value, x, y, 25));
+  store.fiiledCellByArray((x, y) => fillCell(canvasRef.value, x, y, 25, theme.theme.colors.bgTeriary));
+};
 
 watch(
   () => props.isPause,
@@ -54,14 +60,7 @@ const updateAsyncAction = () => {
 const startAsyncAction = () => {
   if (intervalId === null) {
     intervalId = window.setInterval(() => {
-      for (let row = 0; row < store.field.length; row++) {
-        for (let col = 0; col < store.field[row].length; col++) {
-          store.motion(row, col);
-        }
-      }
-
-      store.clearedCellsByArray((x, y) => clearCell(canvasRef.value, x, y, 25));
-      store.fiiledCellByArray((x, y) => fillCell(canvasRef.value, x, y, 25, theme.theme.colors.bgTeriary));
+      motion();
     }, props.speed);
   }
 };

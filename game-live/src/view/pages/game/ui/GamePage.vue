@@ -1,31 +1,61 @@
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, watch } from "vue";
 import { FieldManager } from "viewModel/field-manager";
 import { Page } from "view/ui/page";
-import { fieldStore } from "model/field";
+import { clearAllField, drawCell, fieldStore } from "model/field";
 import { useRouter } from "vue-router";
 import { Routes } from "view/app/routing";
-import ControllFieldForm from "viewModel/controll-field-form/ui/ControllFieldForm.vue";
+import {ControllFieldForm} from "viewModel/controll-field-form";
+import { themeStore } from "model/theme";
 
 const bodyRef = ref<HTMLDivElement>();
+const canvasRef = ref<HTMLCanvasElement>();
 
 const router = useRouter();
 const store = fieldStore();
+const theme = themeStore();
 
 const isPause = ref(true);
 const speed = ref(1000);
+const onMotion = ref<void | null>(null);
+
+const drawField = () => {
+  if (canvasRef.value)
+    drawCell(
+      canvasRef.value,
+      store.field,
+      store.cell_size,
+      theme.theme.colors.bgTeriary,
+      theme.theme.colors.textPrimary
+    );
+};
+
+watch(
+  () => canvasRef.value,
+  () => {
+    drawField()
+  }
+);
 
 watchEffect(() => {
   if (store.field.length === 0) {
     router.push({ path: Routes.HOME.path });
   }
 });
+
+const clearField = () => {
+  store.initialField(store.field.length, store.field[0].length, 25);
+  clearAllField(canvasRef.value);
+  drawField()
+};
 </script>
 
 <template>
   <Page class="page">
     <div ref="bodyRef" class="body_field">
       <FieldManager
+        @get-canvas="(canvas) => (canvasRef = canvas)"
+        @motion="(event) => (onMotion = event)"
         :is-pause="isPause"
         :speed="speed"
         v-if="bodyRef"
@@ -36,6 +66,9 @@ watchEffect(() => {
     </div>
     <div class="controller">
       <ControllFieldForm
+        v-if="onMotion"
+        @clear="clearField"
+        @on-motion="onMotion"
         @set-speed="(value) => (speed = value)"
         @set-pause="(value) => (isPause = value)"
         class="form"

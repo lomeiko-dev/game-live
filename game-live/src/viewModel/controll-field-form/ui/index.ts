@@ -1,1 +1,1 @@
-export { default as ControllFieldForm } from "ControllFieldForm.vue";
+export { default as ControllFieldForm } from "./ControllFieldForm.vue";
