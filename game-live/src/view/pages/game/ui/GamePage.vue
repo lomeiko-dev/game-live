@@ -20,6 +20,7 @@ const theme = themeStore();
 const isPause = ref(true);
 const speed = ref(1000);
 const onMotion = ref<void | null>(null);
+const onClear = ref<void | null>(null);
 
 const drawField = () => {
   if (canvasRef.value)
@@ -57,7 +58,7 @@ const clearField = () => {
     <div ref="bodyRef" class="body_field">
       <FieldManager
         :size_sell="SIZE_SELL"
-        @get-canvas="(canvas) => (canvasRef = canvas)"
+        @clear="(event) => (onClear = event)"
         @motion="(event) => (onMotion = event)"
         :is-pause="isPause"
         :speed="speed"
@@ -69,8 +70,8 @@ const clearField = () => {
     </div>
     <div class="controller">
       <ControllFieldForm
-        v-if="onMotion"
-        @clear="clearField"
+        v-if="onMotion && onClear"
+        @on-clear="onClear"
         @on-motion="onMotion"
         @set-speed="(value) => (speed = value)"
         @set-pause="(value) => (isPause = value)"

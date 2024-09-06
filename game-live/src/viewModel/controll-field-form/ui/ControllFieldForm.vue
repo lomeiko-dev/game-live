@@ -10,7 +10,7 @@ import { speedsConfig } from "../model/config/speed-config";
 import { useRouter } from "vue-router";
 import { Routes } from "view/app/routing";
 
-const emits = defineEmits(["setSpeed", "setPause", "onMotion", "clear"]);
+const emits = defineEmits(["setSpeed", "setPause", "onMotion", "onClear"]);
 
 const isPause = ref(true);
 const speedIndex = ref(2);
@@ -44,7 +44,7 @@ const clickMenuHandler = () => {
 };
 
 const clearField = () => {
-  emits("clear");
+  emits("onClear");
   isPause.value = true;
 };
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import { fieldStore, fillCell, clearCell } from "model/field";
+import { fieldStore, fillCell, clearCell, drawCell, clearAllField } from "model/field";
 import { themeStore } from "model/theme";
 
 interface IProps {
@@ -13,7 +13,7 @@ interface IProps {
 }
 
 const props = defineProps<IProps>();
-const emits = defineEmits(["motion", "getCanvas"]);
+const emits = defineEmits(["motion", "clear"]);
 
 const canvasRef = ref<HTMLCanvasElement>();
 const store = fieldStore();
@@ -23,10 +23,34 @@ let intervalId: number | null = null;
 
 onMounted(() => {
   if (canvasRef.value) {
-    emits("getCanvas", canvasRef.value);
+    emits("clear", clearField);
     emits("motion", motion);
   }
 });
+
+const drawField = () => {
+  if (canvasRef.value)
+    drawCell(
+      canvasRef.value,
+      store.field,
+      store.cell_size,
+      theme.theme.colors.bgTeriary,
+      theme.theme.colors.textPrimary
+    );
+};
+
+watch(
+  () => canvasRef.value,
+  () => {
+    drawField()
+  }
+);
+
+const clearField = () => {
+  store.initialField(store.field.length, store.field[0].length, 25);
+  clearAllField(canvasRef.value);
+  drawField()
+};
 
 const motion = () => {
   for (let row = 0; row < store.field.length; row++) {
