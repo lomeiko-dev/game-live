@@ -5,6 +5,8 @@ import { Button, enumTypeButton } from "viewModel/ui/button";
 import { useRouter } from "vue-router";
 import { fieldStore } from "model/field";
 
+const SIZE_SELL = 25
+
 interface IProps {
   pathGame: string;
 }
@@ -18,7 +20,7 @@ const sizeX = ref();
 const sizeY = ref();
 
 const clickStartHandler = () => {
-    store.initialField(sizeX.value || 10, sizeY.value || 10, 25);
+    store.initialField(sizeX.value || 10, sizeY.value || 10, SIZE_SELL);
     router.push({path: props.pathGame});
 };
 </script>

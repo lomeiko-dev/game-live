@@ -8,6 +8,8 @@ import { Routes } from "view/app/routing";
 import {ControllFieldForm} from "viewModel/controll-field-form";
 import { themeStore } from "model/theme";
 
+const SIZE_SELL = 25
+
 const bodyRef = ref<HTMLDivElement>();
 const canvasRef = ref<HTMLCanvasElement>();
 
@@ -44,7 +46,7 @@ watchEffect(() => {
 });
 
 const clearField = () => {
-  store.initialField(store.field.length, store.field[0].length, 25);
+  store.initialField(store.field.length, store.field[0].length, SIZE_SELL);
   clearAllField(canvasRef.value);
   drawField()
 };
@@ -54,6 +56,7 @@ const clearField = () => {
   <Page class="page">
     <div ref="bodyRef" class="body_field">
       <FieldManager
+        :size_sell="SIZE_SELL"
         @get-canvas="(canvas) => (canvasRef = canvas)"
         @motion="(event) => (onMotion = event)"
         :is-pause="isPause"

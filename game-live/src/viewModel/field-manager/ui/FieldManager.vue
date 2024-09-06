@@ -6,13 +6,14 @@ import { themeStore } from "model/theme";
 interface IProps {
   size_x: number;
   size_y: number;
+  size_sell: number;
   parent: HTMLDivElement;
   isPause: boolean;
   speed: number;
 }
 
 const props = defineProps<IProps>();
-const emits = defineEmits(['motion', 'getCanvas'])
+const emits = defineEmits(["motion", "getCanvas"]);
 
 const canvasRef = ref<HTMLCanvasElement>();
 const store = fieldStore();
@@ -21,9 +22,9 @@ const theme = themeStore();
 let intervalId: number | null = null;
 
 onMounted(() => {
-  if (canvasRef.value){
-    emits('getCanvas', canvasRef.value)
-    emits('motion', motion)
+  if (canvasRef.value) {
+    emits("getCanvas", canvasRef.value);
+    emits("motion", motion);
   }
 });
 
@@ -34,8 +35,8 @@ const motion = () => {
     }
   }
 
-  store.clearedCellsByArray((x, y) => clearCell(canvasRef.value, x, y, 25));
-  store.fiiledCellByArray((x, y) => fillCell(canvasRef.value, x, y, 25, theme.theme.colors.bgTeriary));
+  store.clearedCellsByArray((x, y) => clearCell(canvasRef.value, x, y, props.size_sell));
+  store.fiiledCellByArray((x, y) => fillCell(canvasRef.value, x, y, props.size_sell, theme.theme.colors.bgTeriary));
 };
 
 watch(
@@ -85,7 +86,7 @@ const canvasClickHanler = (e: any) => {
       const result = store.toggleCell(col, row);
       if (result === 1) fillCell(canvasRef.value, row, col, 25, theme.theme.colors.bgTeriary);
       else {
-        clearCell(canvasRef.value, row, col, 25);
+        clearCell(canvasRef.value, row, col, props.size_sell);
       }
     }
   }

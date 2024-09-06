@@ -9,7 +9,6 @@ onMounted(() => {
   theme.loadTheme()
 })
 </script>
-
 <template>
   <div :class="theme.theme.themeName">
     <RouterView/>
