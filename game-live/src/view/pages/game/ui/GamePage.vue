@@ -2,7 +2,7 @@
 import { ref, watchEffect, watch } from "vue";
 import { FieldManager } from "viewModel/field-manager";
 import { Page } from "view/ui/page";
-import { clearAllField, drawCell, fieldStore } from "model/field";
+import { drawCell, fieldStore } from "model/field";
 import { useRouter } from "vue-router";
 import { Routes } from "view/app/routing";
 import {ControllFieldForm} from "viewModel/controll-field-form";
@@ -46,11 +46,6 @@ watchEffect(() => {
   }
 });
 
-const clearField = () => {
-  store.initialField(store.field.length, store.field[0].length, SIZE_SELL);
-  clearAllField(canvasRef.value);
-  drawField()
-};
 </script>
 
 <template>
@@ -70,6 +65,7 @@ const clearField = () => {
     </div>
     <div class="controller">
       <ControllFieldForm
+
         v-if="onMotion && onClear"
         @on-clear="onClear"
         @on-motion="onMotion"
