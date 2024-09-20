@@ -21,6 +21,7 @@ const clickGitHandler = () => {
     <ThemeChanger class="button_theme" />
     <Header />
     <Body
+      class="body"
       @on-git-click="clickGitHandler"
       @on-info-click="showInfo = !showInfo"
       @on-start-click="showStart = !showStart"
@@ -34,6 +35,10 @@ const clickGitHandler = () => {
   </Page>
 </template>
 <style lang="scss">
+.body{
+  align-items: center;
+  height: 50%;
+}
 .button_theme {
   position: absolute;
   top: 20px;

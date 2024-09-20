@@ -78,8 +78,10 @@ watch(
 );
 
 const updateAsyncAction = () => {
-  stopAsyncAction();
-  startAsyncAction();
+  if(!props.isPause) {
+    stopAsyncAction();
+    startAsyncAction();
+  }
 };
 
 const startAsyncAction = () => {

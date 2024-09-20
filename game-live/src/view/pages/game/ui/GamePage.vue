@@ -65,7 +65,6 @@ watchEffect(() => {
     </div>
     <div class="controller">
       <ControllFieldForm
-
         v-if="onMotion && onClear"
         @on-clear="onClear"
         @on-motion="onMotion"

@@ -21,7 +21,6 @@ const emits = defineEmits(["onInfoClick", "onStartClick", "onGitClick"]);
 </template>
 <style scoped lang="scss">
 .body {
-  margin-top: 120px;
   display: flex;
   flex-direction: row;
   align-items: center;
